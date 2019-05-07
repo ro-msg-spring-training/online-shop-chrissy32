@@ -1,81 +1,84 @@
 CREATE TABLE ProductCategory(
         ID INT auto_increment PRIMARY KEY,
-        Name VARCHAR(100),
-        Description VARCHAR(1000));
+        name VARCHAR(100),
+        description VARCHAR(1000));
 
-CREATE UNIQUE INDEX UI_PC ON ProductCategory(Name);
+CREATE UNIQUE INDEX UI_PC ON ProductCategory(name);
 
 CREATE TABLE Supplier(
         ID INT auto_increment PRIMARY KEY,
-        Name VARCHAR(100));
+        name VARCHAR(100));
 
 CREATE UNIQUE INDEX UI_S ON Supplier(Name);
 
 CREATE TABLE Product(
         ID INT auto_increment PRIMARY KEY,
-        Name VARCHAR(100),
-        Description VARCHAR(1000),
-        Price DECIMAL,
-        Weight DOUBLE,
-        Category VARCHAR(100),
-        Supplier VARCHAR(100),
-        ImageURL VARCHAR(200),
-        FOREIGN KEY(Category) REFERENCES ProductCategory(Name),
-        FOREIGN KEY(Supplier) REFERENCES Supplier(Name));
+        name VARCHAR(100),
+        description VARCHAR(1000),
+        price DECIMAL,
+        weight DOUBLE,
+        productcategory INT,
+        supplier VARCHAR(100),
+        imageURL VARCHAR(200),
+        FOREIGN KEY(productcategory) REFERENCES ProductCategory(ID),
+        FOREIGN KEY(supplier) REFERENCES Supplier(name));
 
-CREATE UNIQUE INDEX UI_P ON Product(Name);
+CREATE UNIQUE INDEX UI_P ON Product(name);
+
+CREATE TABLE Address(
+        ID INT auto_increment PRIMARY KEY,
+        addressCountry VARCHAR(100),
+        addressCity VARCHAR(100),
+        addressCounty VARCHAR(100),
+        addressStreet VARCHAR(200));
 
 CREATE TABLE Location(
         ID INT auto_increment PRIMARY KEY,
-        Name VARCHAR(100),
-        AddressCountry VARCHAR(100),
-        AddressCity VARCHAR(100),
-        AddressCounty VARCHAR(100),
-        AddressStreetAddress VARCHAR(200));
+        name VARCHAR(100),
+        address INT,
+        FOREIGN KEY(address) REFERENCES Address(ID));
 
-CREATE UNIQUE INDEX UI_L ON Location(Name);
+CREATE UNIQUE INDEX UI_L ON Location(name);
 
 CREATE TABLE Stock(
-        Product VARCHAR(100),
-        Location VARCHAR(100),
-        Quantity INT,
-        FOREIGN KEY(Product) REFERENCES Product(Name),
-        FOREIGN KEY(Location) REFERENCES Location(Name),
-        PRIMARY KEY(Product, Location));
+        ID INT auto_increment PRIMARY KEY,
+        product VARCHAR(100),
+        location VARCHAR(100),
+        quantity INT,
+        FOREIGN KEY(product) REFERENCES Product(name),
+        FOREIGN KEY(location) REFERENCES Location(name));
 
 CREATE TABLE Customer(
         ID INT auto_increment PRIMARY KEY,
-        FirstName VARCHAR(100),
-        LastName VARCHAR(100),
-        Username VARCHAR(100),
-        Password VARCHAR(100),
-        EmailAddress VARCHAR(200) UNIQUE);
+        firstName VARCHAR(100),
+        lastName VARCHAR(100),
+        username VARCHAR(100),
+        password VARCHAR(100),
+        emailAddress VARCHAR(200) UNIQUE);
 
 CREATE UNIQUE INDEX UI_C ON Customer(username);
 
 CREATE TABLE Orders(
         ID INT auto_increment PRIMARY KEY,
-        ShippedFrom VARCHAR(100),
-        Customer VARCHAR(100),
-        CreatedAt TIMESTAMP,
-        AddressCountry VARCHAR(100),
-        AddressCity VARCHAR(100),
-        AddressCounty VARCHAR(100),
-        AddressStreet VARCHAR(200),
-        FOREIGN KEY(ShippedFrom) REFERENCES Location(Name),
-        FOREIGN KEY(Customer) REFERENCES Customer(Username));
+        shippedFrom VARCHAR(100),
+        customer VARCHAR(100),
+        createdAt TIMESTAMP,
+        address INT,
+        FOREIGN KEY(address) REFERENCES Address(ID),
+        FOREIGN KEY(shippedFrom) REFERENCES Location(name),
+        FOREIGN KEY(customer) REFERENCES Customer(username));
 
 CREATE TABLE OrderDetail(
+        ID INT auto_increment PRIMARY KEY,
         orderID INT,
-        Product VARCHAR(100),
-        Quantity INT,
+        product VARCHAR(100),
+        quantity INT,
         FOREIGN KEY(orderID) REFERENCES Orders(ID),
-        FOREIGN KEY(Product) REFERENCES Product(Name),
-        PRIMARY KEY(orderID, Product));
+        FOREIGN KEY(product) REFERENCES Product(name));
 
 CREATE TABLE Revenue(
         ID INT auto_increment PRIMARY KEY,
-        Location VARCHAR(100),
+        location VARCHAR(100),
         Date DATE,
         Sum DECIMAL,
-        FOREIGN KEY(Location) REFERENCES Location(Name));
+        FOREIGN KEY(location) REFERENCES Location(name));
