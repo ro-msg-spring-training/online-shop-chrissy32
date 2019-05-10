@@ -6,9 +6,7 @@ import java.io.Serializable;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-public class BaseDTO implements Serializable {
-    protected Integer ID;
+@Data
+public class BaseDTO<T> implements Serializable {
+    protected T ID;
 }

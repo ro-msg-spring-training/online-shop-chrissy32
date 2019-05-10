@@ -1,6 +1,6 @@
 INSERT INTO ProductCategory(name, description) VALUES
                 ('convenience', 'frequent purchase, little effort, low customer involvement'),
-                ('shopping', 'less frequent purchase, much effort (planning and comparison of brands on price, quality, style etc.)'),
+                ('shopping', 'less frequent purchase, much effort (planning and comparison of brands on price, quality, style etc.'),
                 ('speciality', 'strong brand preference and loyalty, special purchase effort, little comparison of brands, low price sensitivity'),
                 ('unsought', 'little product awareness and knowledge or little interest');
 
@@ -9,11 +9,11 @@ INSERT INTO Supplier(name) VALUES('MWV Switzerland Ltd'),
                 ('Wujiang Dongnan Garments Industry Co., Ltd.'),
                 ('Americanfreight');
 
-INSERT INTO Product(name, description, price, weight, productcategory, supplier, imageURL) VALUES
-                ('furniture', 'curvilinear - bold, beautiful curves', 90.08, 50, 2, 'MWV Switzerland Ltd', 'https://www.dictionary.com/e/wp-content/uploads/2017/08/curvilinear_2.jpg'),
-                ('Rolex watch', 'crafted from the finest raw materials and assembled with scrupulous attention to detail', 8509.63, 0.11, 3, 'Wujiang Dongnan Garments Industry Co., Ltd.', 'https://www.rolex.com/content/dam/rolex-58/navigation/pannel/mobile/navigation_sky-dweller_mobile_0001_270x380.jpg'),
-                ('life insurance', 'the insurance company provides a lump-sum payment, known as a death benefit, to beneficiaries upon the insureds death', 814.56, 0, 4, 'Bio-Rad ABD Serotec Inc.', 'http://www.globaldomainsnews.com/wp-content/uploads/2019/02/p_lifeinsurance-187048904.jpg'),
-                ('laundry detergent', 'added for cleaning laundry', 9.92, 5, 1, 'Americanfreight', 'https://images-na.ssl-images-amazon.com/images/I/81BiwXqtrQL._SY355_.jpg');
+INSERT INTO Product(name, description, price, weight, category, supplier, imageURL) VALUES
+                ('furniture', 'curvilinear - bold, beautiful curves', 90.08, 50, 2, 1, 'https://www.dictionary.com/e/wp-content/uploads/2017/08/curvilinear_2.jpg'),
+                ('Rolex watch', 'crafted from the finest raw materials and assembled with scrupulous attention to detail', 8509.63, 0.11, 3, 3, 'https://www.rolex.com/content/dam/rolex-58/navigation/pannel/mobile/navigation_sky-dweller_mobile_0001_270x380.jpg'),
+                ('life insurance', 'the insurance company provides a lump-sum payment, known as a death benefit, to beneficiaries upon the insureds death', 814.56, 0, 4, 2, 'http://www.globaldomainsnews.com/wp-content/uploads/2019/02/p_lifeinsurance-187048904.jpg'),
+                ('laundry detergent', 'added for cleaning laundry', 9.92, 5, 1, 4, 'https://images-na.ssl-images-amazon.com/images/I/81BiwXqtrQL._SY355_.jpg');
 
 
 INSERT INTO Address(addressCountry, addressCity, addressCounty, addressStreet) VALUES
@@ -33,11 +33,11 @@ INSERT INTO Location(name, address) VALUES
                 ('Mistden', 5);
 
 INSERT INTO Stock(product, location, quantity) VALUES
-                ('Rolex watch', 'Magedell', 100),
-                ('furniture', 'Mistden', 50),
-                ('laundry detergent', 'Corhall', 100),
-                ('laundry detergent', 'Sunken Place', 200),
-                ('life insurance', 'Eastlyn', 5);
+                (2, 1, 100),
+                (1, 5, 50),
+                (4, 3, 100),
+                (4, 2, 200),
+                (3, 4, 5);
 
 INSERT INTO Customer(firstName, lastName, username, password, emailAddress) VALUES
                 ('Evie', 'Kalfr', 'adantiou', 'password1', 'eimear@gmail.com'),
@@ -46,13 +46,13 @@ INSERT INTO Customer(firstName, lastName, username, password, emailAddress) VALU
                 ('Juliya', 'Larisa', 'minackso', 'password4', 'kosact@yahoo.com');
 
 INSERT INTO Orders(shippedFrom, customer, createdAt, address) VALUES
-                ('Magedell', 'adantiou', '2018-08-19 12:17:55', 6),
-                ('Corhall', 'procycen', CURRENT_TIMESTAMP, 7);
+                (1, 1, '2018-08-19 12:17:55', 6),
+                (3, 3, CURRENT_TIMESTAMP, 7);
 
 INSERT INTO OrderDetail(orderID, product, quantity) VALUES
-                (1, 'furniture', 2),
-                (2, 'laundry detergent', 5);
+                (1, 1, 2),
+                (2, 4, 5);
 
 INSERT INTO Revenue(location, date, sum) VALUES
-                ('Mistden', CURRENT_DATE, 6.7),
-                ('Eastlyn', CURRENT_DATE, 8.7);
+                (5, CURRENT_DATE, 6.7),
+                (4, CURRENT_DATE, 8.7);

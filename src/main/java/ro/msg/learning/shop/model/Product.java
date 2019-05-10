@@ -1,9 +1,7 @@
 package ro.msg.learning.shop.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -24,28 +22,35 @@ public class Product extends BaseEntity<Integer> {
     private BigDecimal price;
     @Column
     private Double weight;
+
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = ProductCategory.class)
-    @JoinColumn(name = "productcategory", referencedColumnName = "ID")
-    private Integer category;
+    @JoinColumn(name = "category", referencedColumnName = "ID")
+    @JsonIgnoreProperties(value = {"products", "hibernateLazyInitializer"})
+    private ProductCategory category;
+
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Supplier.class)
-    @JoinColumn(name = "supplier", referencedColumnName = "name")
-    private String supplier;
+    @JoinColumn(name = "supplier", referencedColumnName = "ID")
+    @JsonIgnoreProperties(value = "products")
+    private Supplier supplier;
+
     @Column
     private String imageURL;
-    @OneToMany(mappedBy = "product")
+
+    @OneToMany(mappedBy = "product", targetEntity = Stock.class, cascade=CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"product", "location", "quantity"})
     private List<Stock> stocks = new ArrayList<>();
-    @OneToMany(mappedBy = "product")
+
+    @OneToMany(mappedBy = "product", targetEntity = OrderDetail.class, cascade=CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"order", "product", "quantity"})
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
-//    public Product() {}
-//
-//    public Product(String Name, String Description, BigDecimal Price, Double Weight, ProductCategory Category, Supplier Supplier, String ImageURL) {
-//        this.Name = Name;
-//        this.Description = Description;
-//        this.Price = Price;
-//        this.Weight = Weight;
-//        this.Category = Category;
-//        this.Supplier = Supplier;
-//        this.ImageURL = ImageURL;
-//    }
+    public Product(String name, String description, BigDecimal price, Double weight, ProductCategory category, Supplier supplier, String imageURL) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.weight = weight;
+        this.category = category;
+        this.supplier = supplier;
+        this.imageURL = imageURL;
+    }
 }

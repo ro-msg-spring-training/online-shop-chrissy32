@@ -30,13 +30,4 @@ public class Customer extends BaseEntity<Integer> {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
-//    public Customer() {}
-//
-//    public Customer(String FirstName, String LastName, String Username, String Password, String EmailAddress) {
-//        this.FirstName = FirstName;
-//        this.LastName = LastName;
-//        this.Username = Username;
-//        this.Password = Password;
-//        this.EmailAddress = EmailAddress;
-//    }
 }

@@ -16,18 +16,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Revenue extends BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Location.class)
-    @JoinColumn(name = "location", referencedColumnName = "name")
-    private String location;
+    @JoinColumn(name = "location", referencedColumnName = "ID")
+    private Location location;
     @Column
     private LocalDate date;
     @Column
     private BigDecimal sum;
-
-//    public Revenue() {}
-//
-//    public Revenue(Location Location, LocalDate Date, BigDecimal Sum) {
-//        this.Location = Location;
-//        this.Date = Date;
-//        this.Sum = Sum;
-//    }
 }

@@ -10,13 +10,9 @@ import java.io.Serializable;
 
 @MappedSuperclass
 @Data
-public abstract class BaseEntity<ID> implements Serializable {
+public abstract class BaseEntity<T> implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    protected ID ID;
+    protected T ID;
 
-    @Override
-    public String toString() {
-        return "BaseEntity --- ID: " + this.ID;
-    }
 }

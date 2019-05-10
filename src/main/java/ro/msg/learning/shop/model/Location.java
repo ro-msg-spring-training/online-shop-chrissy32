@@ -19,7 +19,7 @@ public class Location extends BaseEntity<Integer> {
     private String name;
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
     @JoinColumn(name = "address", referencedColumnName = "ID")
-    private Integer address;
+    private Address address;
     @OneToMany(mappedBy = "location")
     private List<Stock> stocks = new ArrayList<>();
     @OneToMany(mappedBy = "shippedFrom")
