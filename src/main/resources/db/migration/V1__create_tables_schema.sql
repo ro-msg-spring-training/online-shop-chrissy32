@@ -46,7 +46,8 @@ CREATE TABLE Stock(
         location INT,
         quantity INT NOT NULL,
         FOREIGN KEY(product) REFERENCES Product(ID),
-        FOREIGN KEY(location) REFERENCES Location(ID));
+        FOREIGN KEY(location) REFERENCES Location(ID),
+        UNIQUE(product, location));
 
 CREATE TABLE Customer(
         ID INT auto_increment PRIMARY KEY,

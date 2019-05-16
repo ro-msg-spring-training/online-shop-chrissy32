@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import ro.msg.learning.shop.dto.ProductQuantityDTO;
+import ro.msg.learning.shop.dto.StockDTO;
 import ro.msg.learning.shop.model.*;
 import ro.msg.learning.shop.repository.*;
 import ro.msg.learning.shop.strategy.SingleLocationStrategy;
@@ -67,7 +68,7 @@ public class SingleLocationUnitTest {
         List<ProductQuantityDTO> lst = new ArrayList<>();
         lst.add(new ProductQuantityDTO(1, 100));
 
-        List<Stock> stocks = strategy.findLocation(lst);
+        List<StockDTO> stocks = strategy.findLocation(lst);
 
         assert (!stocks.isEmpty());
     }

@@ -3,6 +3,7 @@ package ro.msg.learning.shop.strategy;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import ro.msg.learning.shop.dto.ProductQuantityDTO;
+import ro.msg.learning.shop.dto.StockDTO;
 import ro.msg.learning.shop.exceptions.MissingStockException;
 import ro.msg.learning.shop.exceptions.UnknownProductException;
 import ro.msg.learning.shop.model.Stock;
@@ -17,11 +18,11 @@ import java.util.NoSuchElementException;
 @NoArgsConstructor
 public class MostAbundantLocationStrategy implements ILocationStrategy {
     private IStockRepository stockRepository;
-    IProductRepository productRepository;
+    private IProductRepository productRepository;
 
     @Override
-    public List<Stock> findLocation(List<ProductQuantityDTO> products) {
-        List<Stock> mostAbundantStocks = new ArrayList<>();
+    public List<StockDTO> findLocation(List<ProductQuantityDTO> products) {
+        List<StockDTO> mostAbundantStocks = new ArrayList<>();
 
         products.forEach(product -> {
             try {
@@ -30,7 +31,10 @@ public class MostAbundantLocationStrategy implements ILocationStrategy {
                 if (stocks.isEmpty())
                     throw new MissingStockException();
 
-                mostAbundantStocks.add(stocks.get(0));
+                Stock stock = stocks.get(0);
+                StockDTO stockDTO = new StockDTO(stock.getLocation(), stock.getProduct(), stock.getQuantity());
+
+                mostAbundantStocks.add(stockDTO);
             } catch (NoSuchElementException e) {
                 throw new UnknownProductException();
             }

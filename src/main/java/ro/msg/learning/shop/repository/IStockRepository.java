@@ -12,4 +12,6 @@ public interface IStockRepository extends IShopRepository<Stock, Integer> {
     List<Stock> findStocksByProductAndQuantity(Product product, Integer quantity);
 
     List<Stock> findByLocation(Location location);
+
+    Stock findByProductAndLocation(Product product, Location location);
 }

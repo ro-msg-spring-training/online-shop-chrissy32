@@ -14,7 +14,7 @@ class OrdersController {
     private OrdersService ordersService;
 
     @PostMapping("/orders")
-    private Order createOrder(@RequestBody OrderDTO newOrder) {
+    public Order createOrder(@RequestBody OrderDTO newOrder) {
         newOrder.setTimestamp(LocalDateTime.now().withNano(0));
         return ordersService.createOrder(newOrder);
     }

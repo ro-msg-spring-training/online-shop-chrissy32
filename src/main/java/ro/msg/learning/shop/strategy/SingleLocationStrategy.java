@@ -3,6 +3,7 @@ package ro.msg.learning.shop.strategy;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import ro.msg.learning.shop.dto.ProductQuantityDTO;
+import ro.msg.learning.shop.dto.StockDTO;
 import ro.msg.learning.shop.exceptions.MissingStockException;
 import ro.msg.learning.shop.exceptions.UnknownProductException;
 import ro.msg.learning.shop.model.Stock;
@@ -18,8 +19,8 @@ public class SingleLocationStrategy implements ILocationStrategy {
     private IProductRepository productRepository;
 
     @Override
-    public List<Stock> findLocation(List<ProductQuantityDTO> products) {
-        Map<Integer, List<Stock>> locations = new HashMap<>();
+    public List<StockDTO> findLocation(List<ProductQuantityDTO> products) {
+        Map<Integer, List<StockDTO>> locations = new HashMap<>();
 
         products.forEach(product -> {
             try{
@@ -28,13 +29,17 @@ public class SingleLocationStrategy implements ILocationStrategy {
                 if (stocks.isEmpty())
                     throw new MissingStockException();
 
-                stocks.forEach(stock -> {
-                    Integer locationID = stock.getLocation().getID();
-                    List<Stock> lst = locations.get(locationID);
+                List<StockDTO> stockDTOS = new ArrayList<>();
+
+                stocks.forEach(stock -> stockDTOS.add(new StockDTO(stock.getLocation(), stock.getProduct(), stock.getQuantity())));
+
+                stockDTOS.forEach(stockDTO -> {
+                    Integer locationID = stockDTO.getLocation().getID();
+                    List<StockDTO> lst = locations.get(locationID);
                     if (lst == null)
                         lst = new ArrayList<>();
 
-                    lst.add(stock);
+                    lst.add(stockDTO);
                     locations.put(locationID, lst);
                 });
 
@@ -43,9 +48,9 @@ public class SingleLocationStrategy implements ILocationStrategy {
             }
         });
 
-        List<Stock> singleLocationStocks = null;
+        List<StockDTO> singleLocationStocks = null;
 
-        for (Map.Entry<Integer, List<Stock>> entry : locations.entrySet()) {
+        for (Map.Entry<Integer, List<StockDTO>> entry : locations.entrySet()) {
             if (entry.getValue().size() == products.size()) {
                 singleLocationStocks = new ArrayList<>(entry.getValue());
                 break;

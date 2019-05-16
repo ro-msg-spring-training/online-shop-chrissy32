@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ro.msg.learning.shop.converter.CSVConverter;
 
 import ro.msg.learning.shop.service.StocksService;
+import ro.msg.learning.shop.service.UserDetailsService;
 
 import java.io.*;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class StocksController {
     private StocksService stocksService;
     private CSVConverter csvConverter;
+    private UserDetailsService userDetailsService;
 
     @GetMapping("/stocks/{id}")
     public void exportStock(@PathVariable Integer id) throws IOException {

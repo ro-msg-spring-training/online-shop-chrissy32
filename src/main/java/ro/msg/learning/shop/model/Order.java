@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,13 +17,18 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(value = {"orderDetails"})
 public class Order extends BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Location.class)
     @JoinColumn(name = "shippedFrom", referencedColumnName = "ID")
+    @JsonIgnoreProperties(value = {"stocks", "orders", "revenues", "hibernateLazyInitializer"})
     private Location shippedFrom;
+
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
     @JoinColumn(name = "customer", referencedColumnName = "ID")
+    @JsonIgnoreProperties(value = {"password", "orders", "hibernateLazyInitializer"})
     private Customer customer;
+
     @Column(nullable=false)
     private LocalDateTime createdAt;
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
