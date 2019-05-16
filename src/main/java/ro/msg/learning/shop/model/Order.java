@@ -23,7 +23,7 @@ public class Order extends BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
     @JoinColumn(name = "customer", referencedColumnName = "ID")
     private Customer customer;
-    @Column
+    @Column(nullable=false)
     private LocalDateTime createdAt;
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
     @JoinColumn(name = "address", referencedColumnName = "ID")

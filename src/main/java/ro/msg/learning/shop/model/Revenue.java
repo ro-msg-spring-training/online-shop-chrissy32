@@ -18,8 +18,8 @@ public class Revenue extends BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Location.class)
     @JoinColumn(name = "location", referencedColumnName = "ID")
     private Location location;
-    @Column
+    @Column(nullable=false)
     private LocalDate date;
-    @Column
+    @Column(nullable=false)
     private BigDecimal sum;
 }

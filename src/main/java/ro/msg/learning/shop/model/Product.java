@@ -14,11 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product extends BaseEntity<Integer> {
-    @Column
+    @Column(nullable=false)
     private String name;
     @Column
     private String description;
-    @Column
+    @Column(nullable=false)
     private BigDecimal price;
     @Column
     private Double weight;

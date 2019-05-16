@@ -14,10 +14,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductCategory extends BaseEntity<Integer> {
-    @Column
+    @Column(nullable=false)
     private String name;
     @Column
     private String description;
     @OneToMany(mappedBy = "category", targetEntity = Product.class)
     private List<Product> products = new ArrayList<>();
+
+    public ProductCategory(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

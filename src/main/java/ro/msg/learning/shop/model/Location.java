@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Location extends BaseEntity<Integer> {
-    @Column
+    @Column(nullable=false)
     private String name;
     @OneToOne(fetch = FetchType.LAZY, targetEntity = Address.class)
     @JoinColumn(name = "address", referencedColumnName = "ID")
@@ -26,4 +26,9 @@ public class Location extends BaseEntity<Integer> {
     private List<Order> orders = new ArrayList<>();
     @OneToMany(mappedBy = "location")
     private List<Revenue> revenues = new ArrayList<>();
+
+    public Location(String name, Address address) {
+        this.name = name;
+        this.address = address;
+    }
 }

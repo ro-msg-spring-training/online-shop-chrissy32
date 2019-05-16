@@ -15,9 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Supplier extends BaseEntity<Integer> {
-    @Column
+    @Column(nullable=false)
     private String name;
     @OneToMany(mappedBy = "supplier")
     @JsonIgnoreProperties("supplier")
     private List<Product> products = new ArrayList<>();
+
+    public Supplier(String name) {
+        this.name = name;
+    }
 }

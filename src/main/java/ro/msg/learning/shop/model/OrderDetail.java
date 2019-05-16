@@ -16,7 +16,7 @@ public class OrderDetail extends BaseEntity<Integer> {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Product.class)
     @JoinColumn(name = "product", referencedColumnName = "ID")
     private Product product;
-    @Column
+    @Column(nullable=false)
     private Integer quantity;
 
 }

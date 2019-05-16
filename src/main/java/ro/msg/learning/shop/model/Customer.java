@@ -17,15 +17,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer extends BaseEntity<Integer> {
-    @Column
+    @Column(nullable=false)
     private String firstName;
-    @Column
+    @Column(nullable=false)
     private String lastName;
-    @Column
+    @Column(nullable=false)
     private String username;
-    @Column
+    @Column(nullable=false)
     private String password;
-    @Column
+    @Column(nullable=false)
     private String emailAddress;
     @OneToMany(mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();

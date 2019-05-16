@@ -10,12 +10,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Stock extends BaseEntity<Integer> {
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Product.class)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product", referencedColumnName = "ID")
     private Product product;
-    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Location.class)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location", referencedColumnName = "ID")
     private Location location;
-    @Column
+    @Column(nullable=false)
     private Integer quantity;
 }

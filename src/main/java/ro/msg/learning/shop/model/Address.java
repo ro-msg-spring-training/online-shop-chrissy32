@@ -14,12 +14,12 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address extends BaseEntity<Integer> {
-    @Column
+    @Column(nullable=false)
     private String addressCountry;
-    @Column
+    @Column(nullable=false)
     private String addressCity;
-    @Column
+    @Column(nullable=false)
     private String addressCounty;
-    @Column
+    @Column(nullable=false)
     private String addressStreet;
 }

@@ -1,6 +1,6 @@
 package ro.msg.learning.shop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.dto.ProductAndCategoryDTO;
 import ro.msg.learning.shop.model.Product;
@@ -10,16 +10,15 @@ import ro.msg.learning.shop.repository.IProductCategoryRepository;
 import ro.msg.learning.shop.repository.IProductRepository;
 import ro.msg.learning.shop.repository.ISupplierRepository;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class ProductsService {
-    @Autowired
     private IProductRepository productRepository;
-    @Autowired
     private IProductCategoryRepository productCategoryRepository;
-    @Autowired
     private ISupplierRepository supplierRepository;
 
     public ProductAndCategoryDTO create(ProductAndCategoryDTO item) {
@@ -35,6 +34,7 @@ public class ProductsService {
         return item;
     }
 
+    @Transactional
     public ProductAndCategoryDTO update(Integer id, ProductAndCategoryDTO newItem) {
         ProductCategory category = productCategoryRepository.findById(newItem.getCategory()).get();
         Supplier supplier = supplierRepository.findById(newItem.getSupplier()).get();
@@ -47,7 +47,6 @@ public class ProductsService {
             product.setCategory(category);
             product.setSupplier(supplier);
             product.setImageURL(newItem.getImageURL());
-            productRepository.save(product);
         });
 
         return newItem;
@@ -58,7 +57,7 @@ public class ProductsService {
     }
 
     public List<ProductAndCategoryDTO> getAll() {
-        List<Product> products = productRepository.findAll();
+        Iterable<Product> products = productRepository.findAll();
         List<ProductAndCategoryDTO> dtos = new ArrayList<>();
 
         products.forEach(product -> {

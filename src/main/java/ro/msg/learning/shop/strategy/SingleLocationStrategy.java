@@ -2,45 +2,51 @@ package ro.msg.learning.shop.strategy;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import ro.msg.learning.shop.dto.OrderProduct;
+import ro.msg.learning.shop.dto.ProductQuantityDTO;
+import ro.msg.learning.shop.exceptions.MissingStockException;
+import ro.msg.learning.shop.exceptions.UnknownProductException;
 import ro.msg.learning.shop.model.Stock;
+import ro.msg.learning.shop.repository.IProductRepository;
 import ro.msg.learning.shop.repository.IStockRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 public class SingleLocationStrategy implements ILocationStrategy {
-    @Autowired
     private IStockRepository stockRepository;
+    private IProductRepository productRepository;
 
     @Override
-    public List<Stock> findLocation(List<OrderProduct> products) {
-        List<Stock> stocks = stockRepository.findAll();
+    public List<Stock> findLocation(List<ProductQuantityDTO> products) {
         Map<Integer, List<Stock>> locations = new HashMap<>();
 
-        stocks.forEach(stock -> products.forEach(product -> {
-            if (stock.getProduct().getID().equals(product.getID()) && stock.getQuantity() >= product.getQuantity()) {
-                Integer locationID = stock.getLocation().getID();
+        products.forEach(product -> {
+            try{
+                List<Stock> stocks = stockRepository.findStocksByProductAndQuantity(productRepository.findById(product.getProductID()).get(), product.getQuantity());
 
-                List<Stock> lst = locations.get(locationID);
-                if (lst == null)
-                    lst = new ArrayList<>();
+                if (stocks.isEmpty())
+                    throw new MissingStockException();
 
-                lst.add(stock);
-                locations.put(locationID, lst);
+                stocks.forEach(stock -> {
+                    Integer locationID = stock.getLocation().getID();
+                    List<Stock> lst = locations.get(locationID);
+                    if (lst == null)
+                        lst = new ArrayList<>();
+
+                    lst.add(stock);
+                    locations.put(locationID, lst);
+                });
+
+            } catch (NoSuchElementException e) {
+                throw new UnknownProductException();
             }
-        }));
+        });
 
-        int valid = products.size();
         List<Stock> singleLocationStocks = null;
 
         for (Map.Entry<Integer, List<Stock>> entry : locations.entrySet()) {
-            if (entry.getValue().size() == valid) {
+            if (entry.getValue().size() == products.size()) {
                 singleLocationStocks = new ArrayList<>(entry.getValue());
                 break;
             }

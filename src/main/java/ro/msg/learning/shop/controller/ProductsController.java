@@ -1,6 +1,6 @@
 package ro.msg.learning.shop.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +18,9 @@ import static org.springframework.hateoas.core.DummyInvocationUtils.methodOn;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @org.springframework.web.bind.annotation.RestController
+@AllArgsConstructor
 public class ProductsController {
-    @Autowired
     private ProductResourceAssembler assembler;
-    @Autowired
     private ProductsService productsService;
 
     @GetMapping("/products")
@@ -50,7 +49,6 @@ public class ProductsController {
 
     }
 
-//    @PutMapping("/products/{id}")
     @PutMapping("/products")
     public ResponseEntity<?> updateProduct(@RequestBody ProductAndCategoryDTO newProduct) throws URISyntaxException {
         ProductAndCategoryDTO updatedProduct = productsService.update(newProduct.getID(), newProduct);

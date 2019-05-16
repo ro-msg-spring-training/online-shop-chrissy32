@@ -2,36 +2,37 @@ package ro.msg.learning.shop.strategy;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import ro.msg.learning.shop.dto.OrderProduct;
+import ro.msg.learning.shop.dto.ProductQuantityDTO;
+import ro.msg.learning.shop.exceptions.MissingStockException;
+import ro.msg.learning.shop.exceptions.UnknownProductException;
 import ro.msg.learning.shop.model.Stock;
+import ro.msg.learning.shop.repository.IProductRepository;
 import ro.msg.learning.shop.repository.IStockRepository;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @NoArgsConstructor
 public class MostAbundantLocationStrategy implements ILocationStrategy {
-    @Autowired
     private IStockRepository stockRepository;
+    IProductRepository productRepository;
 
     @Override
-    public List<Stock> findLocation(List<OrderProduct> products) {
-        List<Stock> stocks = stockRepository.findAll();
-
+    public List<Stock> findLocation(List<ProductQuantityDTO> products) {
         List<Stock> mostAbundantStocks = new ArrayList<>();
 
-        Comparator<Stock> comparator = Comparator.comparing(Stock::getQuantity);
-        stocks.sort(comparator.reversed());
-
         products.forEach(product -> {
-            for(Stock stock : stocks){
-                if (stock.getProduct().getID().equals(product.getID()) && stock.getQuantity() >= product.getQuantity()) {
-                    mostAbundantStocks.add(stock);
-                    break;
-                }
+            try {
+                List<Stock> stocks = stockRepository.findStocksByProductAndQuantity(productRepository.findById(product.getProductID()).get(), product.getQuantity());
+
+                if (stocks.isEmpty())
+                    throw new MissingStockException();
+
+                mostAbundantStocks.add(stocks.get(0));
+            } catch (NoSuchElementException e) {
+                throw new UnknownProductException();
             }
         });
 
