@@ -61,8 +61,6 @@ public class OrderCreationIntegrationTest {
     public void failedOrderCreation() {
         List<ProductQuantityDTO> products = new ArrayList<>();
         products.add(new ProductQuantityDTO(1, Integer.MAX_VALUE));
-        products.add(new ProductQuantityDTO(2, Integer.MAX_VALUE));
-        products.add(new ProductQuantityDTO(4, Integer.MAX_VALUE));
 
         Address address = new Address("USA", "Jamaica", "New York", "2434534 Pride Avenue");
         OrderDTO orderDTO = new OrderDTO(LocalDateTime.now().withNano(0), address, products);
@@ -74,7 +72,6 @@ public class OrderCreationIntegrationTest {
         String uri = "/tests/clear";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-        int status = mvcResult.getResponse().getStatus();
     }
 
 }

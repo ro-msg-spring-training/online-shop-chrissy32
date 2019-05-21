@@ -21,7 +21,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @AllArgsConstructor
 public class ProductsController {
     private ProductResourceAssembler assembler;
-    private ProductsService productsService;
+    private final ProductsService productsService;
 
     @GetMapping("/products")
     public Resources<Resource<ProductAndCategoryDTO>> all() {

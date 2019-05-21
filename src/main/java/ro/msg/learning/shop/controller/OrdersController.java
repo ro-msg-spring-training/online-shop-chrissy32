@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @RestController
 @AllArgsConstructor
 class OrdersController {
-    private OrdersService ordersService;
+    private final OrdersService ordersService;
 
     @PostMapping("/orders")
     public Order createOrder(@RequestBody OrderDTO newOrder) {

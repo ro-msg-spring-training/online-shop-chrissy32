@@ -19,6 +19,7 @@ package ro.msg.learning.shop;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import org.springframework.context.annotation.Profile;
 import ro.msg.learning.shop.integrationTests.OrderCreationIntegrationTest;
 import ro.msg.learning.shop.unitTests.MostAbundantUnitTest;
 import ro.msg.learning.shop.unitTests.SingleLocationUnitTest;

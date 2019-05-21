@@ -22,7 +22,7 @@ public class LocationConfiguration {
     }
 
     @Bean
-    ILocationStrategy locationStrategy(@Value("${location.strategy}") Strategy strategy) throws InvalidStrategyException {
+    public ILocationStrategy locationStrategy(@Value("${location.strategy}") Strategy strategy) {
         switch (strategy) {
             case SINGLE:
                 return new SingleLocationStrategy(stockRepository, productRepository);

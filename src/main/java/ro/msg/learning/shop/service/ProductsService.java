@@ -17,9 +17,9 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ProductsService {
-    private IProductRepository productRepository;
-    private IProductCategoryRepository productCategoryRepository;
-    private ISupplierRepository supplierRepository;
+    private final IProductRepository productRepository;
+    private final IProductCategoryRepository productCategoryRepository;
+    private final ISupplierRepository supplierRepository;
 
     public ProductAndCategoryDTO create(ProductAndCategoryDTO item) {
         ProductCategory category = productCategoryRepository.findById(item.getCategory()).get();

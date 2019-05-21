@@ -40,10 +40,10 @@ INSERT INTO Stock(product, location, quantity) VALUES
                 (3, 4, 5);
 
 INSERT INTO Customer(firstName, lastName, username, password, emailAddress) VALUES
-                ('Evie', 'Kalfr', 'adantiou', 'password1', 'eimear@gmail.com'),
-                ('Josephus', 'Marie', 'sardybda', 'password2', 'grdschl@yahoo.ca'),
-                ('Christie', 'Torhild', 'procycen', 'password3', 'jlbaumga@hotmail.com'),
-                ('Juliya', 'Larisa', 'minackso', 'password4', 'kosact@yahoo.com');
+                ('Evie', 'Kalfr', 'adantiou', '$2a$10$/8sJI32uGKmzcrz4NT9uH.XYtuNrr3bqAgnUDW9Bf8RIxBSS2ZRgC', 'eimear@gmail.com'),
+                ('Josephus', 'Marie', 'sardybda', '$2a$10$Y2afFFH.jyCERISyTEjLz.0gDhNTQ62SZfYalQOUXnRfPbN7WedVG', 'grdschl@yahoo.ca'),
+                ('Christie', 'Torhild', 'procycen', '$2a$10$J92r.2J1/BOVLI3vY3a6GeCVaLN9ytPeQld.P0IMMOPyuF7qv7u8K', 'jlbaumga@hotmail.com'),
+                ('Juliya', 'Larisa', 'minackso', '$2a$10$jCZGy6Ks5N/RBWsGbvfFZuGh9cwX3ONVXQwz7YjT8rkQDGL..NtbK', 'kosact@yahoo.com');
 
 INSERT INTO Orders(shippedFrom, customer, createdAt, address) VALUES
                 (1, 1, '2018-08-19 12:17:55', 6),

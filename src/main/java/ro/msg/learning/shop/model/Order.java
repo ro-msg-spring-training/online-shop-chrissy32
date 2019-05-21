@@ -26,7 +26,7 @@ public class Order extends BaseEntity<Integer> {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Customer.class)
     @JoinColumn(name = "customer", referencedColumnName = "ID")
-    @JsonIgnoreProperties(value = {"password", "orders", "hibernateLazyInitializer"})
+    @JsonIgnoreProperties(value = {"password", "orders", "hibernateLazyInitializer", "accountNonLocked", "credentialsNonExpired", "accountNonExpired"})
     private Customer customer;
 
     @Column(nullable=false)

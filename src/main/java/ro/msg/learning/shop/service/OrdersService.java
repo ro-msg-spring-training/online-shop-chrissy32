@@ -17,12 +17,12 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class OrdersService {
-    private IOrderRepository orderRepository;
-    private ICustomerRepository customerRepository;
-    private IStockRepository stockRepository;
-    private ILocationStrategy strategy;
-    private IAddressRepository addressRepository;
-    private IOrderDetailRepository orderDetailRepository;
+    private final IOrderRepository orderRepository;
+    private final ICustomerRepository customerRepository;
+    private final IStockRepository stockRepository;
+    private final ILocationStrategy strategy;
+    private final IAddressRepository addressRepository;
+    private final IOrderDetailRepository orderDetailRepository;
 
     private List<StockDTO> runStrategy(OrderDTO order) {
         return strategy.findLocation(order.getProducts());

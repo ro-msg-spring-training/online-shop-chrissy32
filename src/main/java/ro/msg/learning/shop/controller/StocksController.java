@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 public class StocksController {
-    private StocksService stocksService;
+    private final StocksService stocksService;
     private CSVConverter csvConverter;
 
     @GetMapping("/stocks/{id}")

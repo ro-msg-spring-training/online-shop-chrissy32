@@ -12,8 +12,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class StocksService {
-    private IStockRepository stockRepository;
-    private ILocationRepository locationRepository;
+    private final IStockRepository stockRepository;
+    private final ILocationRepository locationRepository;
 
     public List<Integer> exportStock(Integer locationID) {
         List<Integer> exportedStocks = new ArrayList<>();
