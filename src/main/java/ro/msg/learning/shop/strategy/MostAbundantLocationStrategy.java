@@ -28,13 +28,15 @@ public class MostAbundantLocationStrategy implements ILocationStrategy {
             try {
                 List<Stock> stocks = stockRepository.findStocksByProductAndQuantity(productRepository.findById(product.getProductID()).get(), product.getQuantity());
 
-                if (stocks.isEmpty())
+                if (stocks.isEmpty()) {
                     throw new MissingStockException();
+                }
 
                 Stock stock = stocks.get(0);
                 StockDTO stockDTO = new StockDTO(stock.getLocation(), stock.getProduct(), stock.getQuantity());
 
                 mostAbundantStocks.add(stockDTO);
+
             } catch (NoSuchElementException e) {
                 throw new UnknownProductException();
             }

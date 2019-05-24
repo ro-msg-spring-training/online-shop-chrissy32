@@ -1,6 +1,7 @@
 package ro.msg.learning.shop.integrationTests;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,7 +55,7 @@ public class OrderCreationIntegrationTest {
         OrderDTO orderDTO = new OrderDTO(LocalDateTime.now().withNano(0), address, products);
         Order order = ordersService.createOrder(orderDTO);
 
-        assert (order != null);
+        Assert.assertNotNull(order);
     }
 
     @Test(expected = RuntimeException.class)

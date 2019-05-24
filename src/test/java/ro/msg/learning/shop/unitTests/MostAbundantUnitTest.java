@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.unitTests;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -63,7 +64,7 @@ public class MostAbundantUnitTest {
         lst.add(new ProductQuantityDTO(1, 100));
         List<StockDTO> stocks = strategy.findLocation(lst);
 
-        assert (!stocks.isEmpty());
+        Assert.assertNotEquals(stocks, new ArrayList<>());
     }
 
     @Test(expected = RuntimeException.class)

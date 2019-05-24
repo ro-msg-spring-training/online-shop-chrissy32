@@ -11,6 +11,7 @@ import ro.msg.learning.shop.repository.IProductRepository;
 import ro.msg.learning.shop.repository.IStockRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,18 +27,20 @@ public class SingleLocationStrategy implements ILocationStrategy {
             try{
                 List<Stock> stocks = stockRepository.findStocksByProductAndQuantity(productRepository.findById(product.getProductID()).get(), product.getQuantity());
 
-                if (stocks.isEmpty())
+                if (stocks.isEmpty()) {
                     throw new MissingStockException();
+                }
 
-                List<StockDTO> stockDTOS = new ArrayList<>();
-
-                stocks.forEach(stock -> stockDTOS.add(new StockDTO(stock.getLocation(), stock.getProduct(), stock.getQuantity())));
+                List<StockDTO> stockDTOS = stocks.stream()
+                        .map(stock -> new StockDTO(stock.getLocation(), stock.getProduct(), stock.getQuantity()))
+                        .collect(Collectors.toList());
 
                 stockDTOS.forEach(stockDTO -> {
                     Integer locationID = stockDTO.getLocation().getID();
                     List<StockDTO> lst = locations.get(locationID);
-                    if (lst == null)
+                    if (lst == null) {
                         lst = new ArrayList<>();
+                    }
 
                     lst.add(stockDTO);
                     locations.put(locationID, lst);

@@ -8,7 +8,7 @@ import ro.msg.learning.shop.model.Stock;
 import java.util.List;
 
 public interface IStockRepository extends IShopRepository<Stock, Integer> {
-    @Query(value = "SELECT S FROM Stock S WHERE S.product = ?1 AND S.quantity >= ?2 ORDER BY S.quantity DESC")
+    @Query(value = "SELECT S FROM Stock S WHERE S.product = :product AND S.quantity >= :quantity ORDER BY S.quantity DESC")
     List<Stock> findStocksByProductAndQuantity(Product product, Integer quantity);
 
     List<Stock> findByLocation(Location location);

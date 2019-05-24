@@ -45,9 +45,12 @@ public class OrdersService {
 
         List<StockDTO> stocks = runStrategy(orderDTO);
 
-        if (stocks == null || stocks.isEmpty())
+        if (stocks == null || stocks.isEmpty()) {
             throw new NoLocationFoundException();
+        }
 
+//        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Customer customer = customerRepository.findByUsername((String) userDetails);
 
         Customer customer = customerRepository.findById(1).get();
         long size = orderRepository.count();
@@ -72,8 +75,9 @@ public class OrdersService {
             }
         });
 
-        if (size == orderRepository.count())
+        if (size == orderRepository.count()) {
             throw new OrderNotCreatedException();
+        }
 
         return order;
     }

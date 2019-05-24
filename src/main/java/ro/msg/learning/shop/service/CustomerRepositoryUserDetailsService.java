@@ -1,6 +1,7 @@
 package ro.msg.learning.shop.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.model.Customer;
 import ro.msg.learning.shop.repository.ICustomerRepository;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -20,9 +22,13 @@ public class CustomerRepositoryUserDetailsService implements UserDetailsService 
     public User loadUserByUsername(String username) {
         Customer customer = customerRepository.findByUsername(username);
 
-        if (customer == null)
+        if (customer == null) {
             throw new UsernameNotFoundException("User '" + username + "' not found!");
+        }
 
-        return new User(customer.getUsername(), customer.getPassword(), Collections.singletonList(new SimpleGrantedAuthority("USER")));
+        List<GrantedAuthority> grantedAuthorityList = new ArrayList<>();
+        grantedAuthorityList.add(new SimpleGrantedAuthority("USER"));
+
+        return new User(customer.getUsername(), customer.getPassword(), grantedAuthorityList);
     }
 }

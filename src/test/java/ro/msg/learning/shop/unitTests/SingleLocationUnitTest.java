@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.unitTests;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -70,7 +71,7 @@ public class SingleLocationUnitTest {
 
         List<StockDTO> stocks = strategy.findLocation(lst);
 
-        assert (!stocks.isEmpty());
+        Assert.assertNotEquals(stocks, new ArrayList<>());
     }
 
     @Test(expected = RuntimeException.class)

@@ -15,8 +15,8 @@ import ro.msg.learning.shop.strategy.SingleLocationStrategy;
 @Configuration
 @AllArgsConstructor
 public class LocationConfiguration {
-    IStockRepository stockRepository;
-    IProductRepository productRepository;
+    private final IStockRepository stockRepository;
+    private final IProductRepository productRepository;
     private enum Strategy {
         SINGLE, ABUNDANT
     }
