@@ -23,7 +23,8 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class SingleLocationUnitTest {
-    private IProductRepository productRepository = Mockito.mock(IProductRepository.class);
+    @Mock
+    private IProductRepository productRepository;
     @Mock
     private IStockRepository stockRepository;
     @InjectMocks

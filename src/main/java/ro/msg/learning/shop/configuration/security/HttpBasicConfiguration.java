@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.configuration.security;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
@@ -12,16 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableOAuth2Sso
-//@ConditionalOnProperty(name = "security.type", havingValue = "basic")
 @EnableWebSecurity
 @Profile("basic")
+@AllArgsConstructor
 @Order(101)
 public class HttpBasicConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
     private MyBasicAuthenticationEntryPoint authenticationEntryPoint;
-    @Autowired
     private CustomAuthenticationProvider authProvider;
-
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) {

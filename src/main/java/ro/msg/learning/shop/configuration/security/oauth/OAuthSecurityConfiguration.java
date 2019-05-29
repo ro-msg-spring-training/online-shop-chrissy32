@@ -1,6 +1,6 @@
 package ro.msg.learning.shop.configuration.security.oauth;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,17 +10,14 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import ro.msg.learning.shop.configuration.security.CustomAuthenticationProvider;
 import ro.msg.learning.shop.service.CustomerRepositoryUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class OAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private CustomerRepositoryUserDetailsService userDetailsService;
-    @Autowired
-    private CustomAuthenticationProvider authenticationProvider;
+    private final CustomerRepositoryUserDetailsService userDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -37,6 +34,7 @@ public class OAuthSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     @Bean
+    // this bean is not created without actually calling super
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }

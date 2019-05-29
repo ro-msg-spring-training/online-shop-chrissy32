@@ -2,7 +2,6 @@ package ro.msg.learning.shop.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.Resources;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.converter.ProductResourceAssembler;
@@ -12,10 +11,6 @@ import ro.msg.learning.shop.service.ProductsService;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static org.springframework.hateoas.core.DummyInvocationUtils.methodOn;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 @org.springframework.web.bind.annotation.RestController
 @AllArgsConstructor
@@ -24,13 +19,8 @@ public class ProductsController {
     private final ProductsService productsService;
 
     @GetMapping("/products")
-    public Resources<Resource<ProductAndCategoryDTO>> all() {
-        List<Resource<ProductAndCategoryDTO>> products = productsService.getAll().stream()
-                .map(assembler::toResource)
-                .collect(Collectors.toList());
-
-        return new Resources<>(products,
-                linkTo(methodOn(ProductsController.class).all()).withSelfRel());
+    public List<ProductAndCategoryDTO> all() {
+        return productsService.getAll();
     }
 
     @PostMapping("/products")
@@ -42,11 +32,8 @@ public class ProductsController {
     }
 
     @GetMapping("/products/{id}")
-    public Resource<ProductAndCategoryDTO> one(@PathVariable Integer id) {
-        ProductAndCategoryDTO product = productsService.getOne(id);
-
-        return assembler.toResource(product);
-
+    public ProductAndCategoryDTO one(@PathVariable Integer id) {
+        return productsService.getOne(id);
     }
 
     @PutMapping("/products")

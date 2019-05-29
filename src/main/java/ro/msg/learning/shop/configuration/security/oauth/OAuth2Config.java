@@ -1,9 +1,8 @@
 package ro.msg.learning.shop.configuration.security.oauth;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -12,17 +11,11 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 @Configuration
-@Order(101)
+@AllArgsConstructor
 public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
-    private String clientid = "f38387f7ab8dd175782c";
-    private String clientSecret = "b9d53b63c135d0db86a6ae7e64399bbfc037f65e";
-
-    @Autowired
-    @Qualifier("authenticationManagerBean")
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final PasswordEncoder passwordEncoder;
+    private final Environment env;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
@@ -37,10 +30,14 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        String clientId = env.getProperty("security.oauth2.client.client-id");
+        String clientSecret = env.getProperty("security.oauth2.client.client-secret");
+
         clients.inMemory()
-                .withClient(clientid)
+                .withClient(clientId)
                 .secret(passwordEncoder.encode(clientSecret))
                 .scopes("read", "write")
                 .authorizedGrantTypes("password", "refresh_token");
     }
+
 }
