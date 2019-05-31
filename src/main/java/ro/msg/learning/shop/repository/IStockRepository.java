@@ -14,4 +14,8 @@ public interface IStockRepository extends IShopRepository<Stock, Integer> {
     List<Stock> findByLocation(Location location);
 
     Stock findByProductAndLocation(Product product, Location location);
+
+    @Query(value = "SELECT S FROM Stock S WHERE S.location = :location AND S.product = :product AND S.quantity >= :quantity")
+    List<Stock> findByLocationAndProductAndQuantity(Location location, Product product, Integer quantity);
+
 }

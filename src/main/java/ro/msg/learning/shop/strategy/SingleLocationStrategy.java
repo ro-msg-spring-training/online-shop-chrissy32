@@ -2,7 +2,7 @@ package ro.msg.learning.shop.strategy;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import ro.msg.learning.shop.dto.ProductQuantityDTO;
+import ro.msg.learning.shop.dto.OrderDTO;
 import ro.msg.learning.shop.dto.StockDTO;
 import ro.msg.learning.shop.exceptions.MissingStockException;
 import ro.msg.learning.shop.exceptions.UnknownProductException;
@@ -20,10 +20,10 @@ public class SingleLocationStrategy implements ILocationStrategy {
     private IProductRepository productRepository;
 
     @Override
-    public List<StockDTO> findLocation(List<ProductQuantityDTO> products) {
+    public List<StockDTO> findLocation(OrderDTO orderDTO) {
         Map<Integer, List<StockDTO>> locations = new HashMap<>();
 
-        products.forEach(product -> {
+        orderDTO.getProducts().forEach(product -> {
             try{
                 List<Stock> stocks = stockRepository.findStocksByProductAndQuantity(productRepository.findById(product.getProductID()).get(), product.getQuantity());
 
@@ -54,7 +54,7 @@ public class SingleLocationStrategy implements ILocationStrategy {
         List<StockDTO> singleLocationStocks = null;
 
         for (Map.Entry<Integer, List<StockDTO>> entry : locations.entrySet()) {
-            if (entry.getValue().size() == products.size()) {
+            if (entry.getValue().size() == orderDTO.getProducts().size()) {
                 singleLocationStocks = new ArrayList<>(entry.getValue());
                 break;
             }

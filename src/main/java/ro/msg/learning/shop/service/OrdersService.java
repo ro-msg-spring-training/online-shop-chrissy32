@@ -25,7 +25,7 @@ public class OrdersService {
     private final IOrderDetailRepository orderDetailRepository;
 
     private List<StockDTO> runStrategy(OrderDTO order) {
-        return strategy.findLocation(order.getProducts());
+        return strategy.findLocation(order);
     }
 
     @Transactional
@@ -48,9 +48,6 @@ public class OrdersService {
         if (stocks == null || stocks.isEmpty()) {
             throw new NoLocationFoundException();
         }
-
-//        Object userDetails = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Customer customer = customerRepository.findByUsername((String) userDetails);
 
         Customer customer = customerRepository.findById(1).get();
         long size = orderRepository.count();

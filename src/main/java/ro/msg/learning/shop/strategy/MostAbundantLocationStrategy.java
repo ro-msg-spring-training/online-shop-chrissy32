@@ -2,7 +2,7 @@ package ro.msg.learning.shop.strategy;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import ro.msg.learning.shop.dto.ProductQuantityDTO;
+import ro.msg.learning.shop.dto.OrderDTO;
 import ro.msg.learning.shop.dto.StockDTO;
 import ro.msg.learning.shop.exceptions.MissingStockException;
 import ro.msg.learning.shop.exceptions.UnknownProductException;
@@ -21,10 +21,10 @@ public class MostAbundantLocationStrategy implements ILocationStrategy {
     private IProductRepository productRepository;
 
     @Override
-    public List<StockDTO> findLocation(List<ProductQuantityDTO> products) {
+    public List<StockDTO> findLocation(OrderDTO orderDTO) {
         List<StockDTO> mostAbundantStocks = new ArrayList<>();
 
-        products.forEach(product -> {
+        orderDTO.getProducts().forEach(product -> {
             try {
                 List<Stock> stocks = stockRepository.findStocksByProductAndQuantity(productRepository.findById(product.getProductID()).get(), product.getQuantity());
 

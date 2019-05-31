@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import ro.msg.learning.shop.dto.OrderDTO;
 import ro.msg.learning.shop.dto.ProductQuantityDTO;
 import ro.msg.learning.shop.dto.StockDTO;
 import ro.msg.learning.shop.model.*;
@@ -15,6 +16,7 @@ import ro.msg.learning.shop.repository.*;
 import ro.msg.learning.shop.strategy.MostAbundantLocationStrategy;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,7 +65,11 @@ public class MostAbundantUnitTest {
     public void successRunningStrategy() {
         List<ProductQuantityDTO> lst = new ArrayList<>();
         lst.add(new ProductQuantityDTO(1, 100));
-        List<StockDTO> stocks = strategy.findLocation(lst);
+
+        Address address = new Address("country", "city", "county", "street");
+        OrderDTO orderDTO = new OrderDTO(LocalDateTime.now().withNano(0), address, lst);
+
+        List<StockDTO> stocks = strategy.findLocation(orderDTO);
 
         Assert.assertNotEquals(stocks, new ArrayList<>());
     }
@@ -72,6 +78,10 @@ public class MostAbundantUnitTest {
     public void failRunningStrategy() {
         List<ProductQuantityDTO> lst = new ArrayList<>();
         lst.add(new ProductQuantityDTO(1, 10000));
-        strategy.findLocation(lst);
+
+        Address address = new Address("country", "city", "county", "street");
+        OrderDTO orderDTO = new OrderDTO(LocalDateTime.now().withNano(0), address, lst);
+
+        strategy.findLocation(orderDTO);
     }
 }
