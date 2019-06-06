@@ -23,6 +23,7 @@ public class OrdersService {
     private final ILocationStrategy strategy;
     private final IAddressRepository addressRepository;
     private final IOrderDetailRepository orderDetailRepository;
+    private final MailService mailService;
 
     private List<StockDTO> runStrategy(OrderDTO order) {
         return strategy.findLocation(order);
@@ -76,6 +77,8 @@ public class OrdersService {
             throw new OrderNotCreatedException();
         }
 
+        mailService.sendSimpleMessage("ircristiana@yahoo.com", "Online Shop Order Confirmation",
+                "Your order has been received!");
         return order;
     }
 }

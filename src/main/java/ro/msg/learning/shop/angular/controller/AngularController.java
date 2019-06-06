@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ro.msg.learning.shop.angular.dto.CategoryDTO;
 import ro.msg.learning.shop.angular.dto.SupplierDTO;
+import ro.msg.learning.shop.repository.IOrderRepository;
 import ro.msg.learning.shop.repository.IProductCategoryRepository;
 import ro.msg.learning.shop.repository.ISupplierRepository;
 
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 public class AngularController {
     private final IProductCategoryRepository productCategoryRepository;
     private final ISupplierRepository supplierRepository;
+    private final IOrderRepository orderRepository;
 
     @GetMapping("/categories")
     public List<CategoryDTO> allCategories() {

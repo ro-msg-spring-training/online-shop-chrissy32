@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Configuration
-@EnableOAuth2Sso
+//@EnableOAuth2Sso
 @EnableWebSecurity
 @Profile("basic")
 @AllArgsConstructor
@@ -30,7 +30,7 @@ public class HttpBasicConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers("/oauth/token", "/login").permitAll()
+            .antMatchers("/oauth/token", "/login", "/products").permitAll()
             .anyRequest().authenticated()
             .and().csrf().disable()
             .httpBasic()
