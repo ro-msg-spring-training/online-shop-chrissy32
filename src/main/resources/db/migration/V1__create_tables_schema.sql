@@ -82,4 +82,5 @@ CREATE TABLE Revenue(
         location INT,
         Date DATE NOT NULL,
         Sum DECIMAL NOT NULL,
+        UNIQUE(location, Date),
         FOREIGN KEY(location) REFERENCES Location(ID));

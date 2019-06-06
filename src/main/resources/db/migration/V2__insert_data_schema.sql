@@ -33,11 +33,11 @@ INSERT INTO Location(name, address) VALUES
                 ('Mistden', 5);
 
 INSERT INTO Stock(product, location, quantity) VALUES
-                (2, 1, 100),
-                (1, 5, 50),
-                (4, 3, 100),
-                (4, 2, 200),
-                (3, 4, 5);
+                (2, 1, 5000),
+                (1, 5, 4000),
+                (4, 3, 5000),
+                (4, 2, 6000),
+                (3, 4, 3000);
 
 INSERT INTO Customer(firstName, lastName, username, password, emailAddress) VALUES
                 ('Evie', 'Kalfr', 'adantiou', '$2a$10$/8sJI32uGKmzcrz4NT9uH.XYtuNrr3bqAgnUDW9Bf8RIxBSS2ZRgC', 'eimear@gmail.com'),
@@ -54,5 +54,5 @@ INSERT INTO OrderDetail(orderID, product, quantity) VALUES
                 (2, 4, 5);
 
 INSERT INTO Revenue(location, date, sum) VALUES
-                (5, CURRENT_DATE, 6.7),
-                (4, CURRENT_DATE, 8.7);
+                (5, '2019-06-03', 6.7),
+                (4, '2019-06-03', 8.7);
