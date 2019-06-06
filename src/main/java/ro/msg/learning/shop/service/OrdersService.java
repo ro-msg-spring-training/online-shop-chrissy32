@@ -77,7 +77,7 @@ public class OrdersService {
             throw new OrderNotCreatedException();
         }
 
-        mailService.sendSimpleMessage("ircristiana@yahoo.com", "Online Shop Order Confirmation",
+        mailService.sendSimpleMessage(customer.getEmailAddress(), "Online Shop Order Confirmation",
                 "Your order has been received!");
         return order;
     }
